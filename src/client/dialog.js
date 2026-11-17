@@ -16,7 +16,14 @@ const IMAGE_ERRORS = {
   'too-many-pixels': 'error.tooManyPixels',
   'encoded-too-large': 'error.encodedTooLarge',
   'canvas-unavailable': 'error.unsupportedImage',
-  'empty-image': 'error.unsupportedImage',
+  'empty-image': 'error.emptyImage',
+  'blank-image': 'error.blankImage',
+  'extreme-aspect': 'error.extremeAspect',
+  'tainted-image': 'error.taintedImage',
+  'svg-too-large': 'error.svgTooLarge',
+  'svg-too-complex': 'error.svgTooComplex',
+  'svg-nested-data': 'error.svgNestedData',
+  'svg-unsupported-embed': 'error.svgEmbed',
   'unsupported-type': 'error.unsupportedImage',
 }
 
@@ -41,6 +48,7 @@ export function createIconDialog(React, primitives) {
     const [replaceIcon, setReplaceIcon] = React.useState(existing?.placement !== 'prefix')
     const [imageError, setImageError] = React.useState(null)
     const fileInput = React.useRef(null)
+    const readStep = React.useRef(0)
 
     const state = { emoji, text, color, image, replaceIcon }
     const draft = draftFromState(mode, state)
@@ -53,11 +61,15 @@ export function createIconDialog(React, primitives) {
 
     const applyFile = async (file) => {
       if (file === undefined) return
+      const step = ++readStep.current
       setImageError(null)
       try {
-        setImage(await readIconImageDataUrl(file))
+        const dataUrl = await readIconImageDataUrl(file)
+        if (step !== readStep.current) return
+        setImage(dataUrl)
         setMode('image')
       } catch (failure) {
+        if (step !== readStep.current) return
         setImageError(t(IMAGE_ERRORS[failure?.reason] ?? 'error.unsupportedImage'))
       }
     }
@@ -174,7 +186,7 @@ export function createIconDialog(React, primitives) {
       h('input', {
         ref: fileInput,
         type: 'file',
-        accept: 'image/png,image/jpeg,image/webp',
+        accept: 'image/png,image/jpeg,image/webp,image/svg+xml,.svg',
         hidden: true,
         onChange: pickFile,
       }),
@@ -231,4 +243,3 @@ function preview(spec, h) {
   }, spec.value)
 }
 
-export { ImageInputError }

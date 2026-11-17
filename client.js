@@ -9,7 +9,7 @@
       "tabs.text": "\u6587\u5B57",
       "emoji.placeholder": "\u6216\u76F4\u63A5\u8F93\u5165\u4E00\u4E2A\u8868\u60C5",
       "upload.pick": "\u9009\u62E9\u56FE\u7247",
-      "upload.hint": "PNG\u3001JPEG\u3001WebP\uFF0C\u81EA\u52A8\u7F29\u5230 64 \u50CF\u7D20",
+      "upload.hint": "PNG\u3001JPEG\u3001WebP\u3001SVG\uFF0C\u81EA\u52A8\u7F29\u5230 64 \u50CF\u7D20\uFF1BSVG \u9700\u81EA\u5305\u542B\uFF0C\u4E0D\u5F15\u7528\u5916\u90E8\u8D44\u6E90",
       "upload.replace": "\u6362\u4E00\u5F20\u56FE\u7247",
       "text.placeholder": "\u8F93\u5165 1 \u5230 2 \u4E2A\u5B57\u7B26",
       "text.color": "\u989C\u8272",
@@ -30,7 +30,15 @@
       "error.fileTooLarge": "\u56FE\u7247\u539F\u59CB\u6587\u4EF6\u592A\u5927\uFF0C\u6362\u4E00\u5F20\u5C0F\u4E8E 8 MB \u7684",
       "error.tooManyPixels": "\u56FE\u7247\u50CF\u7D20\u592A\u5927\uFF0C\u5148\u88C1\u526A\u4E00\u4E0B",
       "error.encodedTooLarge": "\u538B\u7F29\u540E\u4ECD\u8D85\u8FC7\u5355\u5F20\u56FE\u6807\u4E0A\u9650\uFF0C\u6362\u4E00\u5F20\u66F4\u7B80\u5355\u7684\u56FE",
-      "error.unsupportedImage": "\u8FD9\u4E2A\u6587\u4EF6\u8BFB\u4E0D\u51FA\u6765\uFF0C\u6362\u4E00\u5F20 PNG\u3001JPEG \u6216 WebP"
+      "error.unsupportedImage": "\u8FD9\u4E2A\u6587\u4EF6\u8BFB\u4E0D\u51FA\u6765\uFF0C\u6362\u4E00\u5F20 PNG\u3001JPEG\u3001WebP \u6216 SVG",
+      "error.emptyImage": "\u8FD9\u5F20\u56FE\u6CA1\u6709\u53EF\u663E\u793A\u7684\u5185\u5BB9\uFF0C\u6362\u4E00\u5F20",
+      "error.blankImage": "\u8FD9\u5F20\u56FE\u6E32\u67D3\u51FA\u6765\u662F\u7A7A\u767D\u7684\uFF0C\u6362\u4E00\u5F20",
+      "error.extremeAspect": "\u8FD9\u5F20\u56FE\u592A\u6241\u6216\u592A\u7A84\uFF0C\u6362\u6210\u63A5\u8FD1\u6B63\u65B9\u5F62\u7684",
+      "error.taintedImage": "SVG \u91CC\u7684 foreignObject \u6216\u5916\u90E8\u5F15\u7528\u65E0\u6CD5\u7ED8\u5236\uFF0C\u5BFC\u51FA\u6210\u7EAF\u77E2\u91CF\u6216\u4F4D\u56FE\u518D\u8BD5",
+      "error.svgTooLarge": "SVG \u8D85\u8FC7 512 KB\uFF0C\u6362\u5C0F\u4E00\u70B9\u7684\u6216\u5BFC\u51FA\u6210 PNG",
+      "error.svgTooComplex": "SVG \u7ED3\u6784\u592A\u590D\u6742\uFF08\u91CD\u590D\u7684 use / image \u5143\u7D20\u8FC7\u591A\uFF09\uFF0C\u5BFC\u51FA\u6210 PNG \u518D\u8BD5",
+      "error.svgNestedData": "SVG \u91CC\u4E0D\u80FD\u518D\u5D4C\u56FE\u7247\u6570\u636E\uFF0C\u5BFC\u51FA\u6210\u5355\u6587\u4EF6\u540E\u518D\u8BD5",
+      "error.svgEmbed": "SVG \u91CC\u5E26 foreignObject\uFF0C\u6D4F\u89C8\u5668\u65E0\u6CD5\u5B89\u5168\u7ED8\u5236\uFF0C\u5BFC\u51FA\u6210 PNG \u6216\u7EAF\u77E2\u91CF SVG"
     },
     en: {
       "menu.item": "Change project icon",
@@ -40,7 +48,7 @@
       "tabs.text": "Text",
       "emoji.placeholder": "Or type one emoji",
       "upload.pick": "Choose image",
-      "upload.hint": "PNG, JPEG, or WebP; scaled to 64 px",
+      "upload.hint": "PNG, JPEG, WebP, or SVG; scaled to 64 px. SVGs must be self-contained.",
       "upload.replace": "Choose another image",
       "text.placeholder": "Type 1 to 2 characters",
       "text.color": "Color",
@@ -61,7 +69,15 @@
       "error.fileTooLarge": "That file is too large; use one under 8 MB",
       "error.tooManyPixels": "That image has too many pixels; crop it first",
       "error.encodedTooLarge": "Still over the per-icon limit after scaling; use a simpler image",
-      "error.unsupportedImage": "That file cannot be read; use PNG, JPEG, or WebP"
+      "error.unsupportedImage": "That file cannot be read; use PNG, JPEG, WebP, or SVG",
+      "error.emptyImage": "That image has no drawable content; choose another",
+      "error.blankImage": "That image renders blank; choose another",
+      "error.extremeAspect": "That image is too flat or too narrow; use something close to square",
+      "error.taintedImage": "Embeds like foreignObject or external references cannot be drawn; export a plain vector or bitmap instead",
+      "error.svgTooLarge": "The SVG is over 512 KB; use a smaller file or export a PNG",
+      "error.svgTooComplex": "That SVG is too complex (too many repeated use/image elements); export a PNG instead",
+      "error.svgNestedData": "The SVG embeds image data; export a single-file SVG and try again",
+      "error.svgEmbed": "The SVG contains foreignObject, which browsers cannot rasterize safely; export a PNG or a plain vector"
     }
   };
 
@@ -385,10 +401,113 @@
     };
   }
 
+  // src/image-header.js
+  var PNG_SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10];
+  var RIFF_SIGNATURE = [82, 73, 70, 70];
+  var WEBP_TAG = [87, 69, 66, 80];
+  var SOF_MARKERS = /* @__PURE__ */ new Set([192, 193, 194, 195, 197, 198, 199, 201, 202, 203, 205, 206, 207]);
+  function readImageSize(bytes) {
+    if (!(bytes instanceof Uint8Array)) return null;
+    if (matches(bytes, 0, PNG_SIGNATURE)) return readPngSize(bytes);
+    if (matches(bytes, 0, RIFF_SIGNATURE) && matches(bytes, 8, WEBP_TAG)) return readWebpSize(bytes);
+    if (bytes[0] === 255 && bytes[1] === 216) return readJpegSize(bytes);
+    return null;
+  }
+  function readPngSize(bytes) {
+    if (bytes.length < 24) return null;
+    return { width: readUint32(bytes, 16), height: readUint32(bytes, 20) };
+  }
+  function readWebpSize(bytes) {
+    if (bytes.length < 30) return null;
+    const chunk = String.fromCharCode(bytes[12], bytes[13], bytes[14], bytes[15]);
+    if (chunk !== "VP8X") return null;
+    return { width: readUint24LE(bytes, 24) + 1, height: readUint24LE(bytes, 27) + 1 };
+  }
+  function readJpegSize(bytes) {
+    let offset = 2;
+    while (offset + 9 < bytes.length) {
+      if (bytes[offset] !== 255) {
+        offset += 1;
+        continue;
+      }
+      const marker = bytes[offset + 1];
+      if (SOF_MARKERS.has(marker)) {
+        return { height: readUint16(bytes, offset + 5), width: readUint16(bytes, offset + 7) };
+      }
+      if (marker === 216 || marker === 217 || marker >= 208 && marker <= 215) {
+        offset += 2;
+        continue;
+      }
+      const length = readUint16(bytes, offset + 2);
+      if (length < 2) return null;
+      offset += 2 + length;
+    }
+    return null;
+  }
+  function matches(bytes, offset, signature) {
+    if (bytes.length < offset + signature.length) return false;
+    return signature.every((value, index) => bytes[offset + index] === value);
+  }
+  function readUint16(bytes, offset) {
+    return bytes[offset] << 8 | bytes[offset + 1];
+  }
+  function readUint24LE(bytes, offset) {
+    return bytes[offset] | bytes[offset + 1] << 8 | bytes[offset + 2] << 16;
+  }
+  function readUint32(bytes, offset) {
+    return (bytes[offset] << 24 | bytes[offset + 1] << 16 | bytes[offset + 2] << 8 | bytes[offset + 3]) >>> 0;
+  }
+
+  // src/image-source.js
+  var SVG_TYPE = "image/svg+xml";
+  var SVG_MEDIA_TYPE_PATTERN = /^image\/svg\+xml$/;
+  var SVG_NAME_PATTERN = /\.svg$/i;
+  var IMAGE_MEDIA_TYPE_PATTERN = /^image\//;
+  function resolveImageSource(type, name = "") {
+    if (typeof type !== "string") return null;
+    const mediaType = type.split(";")[0].trim().toLowerCase();
+    if (SVG_MEDIA_TYPE_PATTERN.test(mediaType)) return "element";
+    if (mediaType === "" && typeof name === "string" && SVG_NAME_PATTERN.test(name)) return "element";
+    if (IMAGE_MEDIA_TYPE_PATTERN.test(mediaType)) return "bitmap";
+    return null;
+  }
+  function isSvgMediaType(type) {
+    return typeof type === "string" && SVG_MEDIA_TYPE_PATTERN.test(type.split(";")[0].trim().toLowerCase());
+  }
+
+  // src/svg-guard.js
+  var SVG_MAX_BYTES = 512 * 1024;
+  var MAX_ELEMENTS = 2e4;
+  var MAX_USE_ELEMENTS = 16;
+  var MAX_IMAGE_ELEMENTS = 8;
+  function inspectSvg(text, byteLength) {
+    if (typeof byteLength === "number" && byteLength > SVG_MAX_BYTES) return "svg-too-large";
+    if (typeof text !== "string") return "unsupported-type";
+    const lower = text.toLowerCase();
+    if (!lower.includes("<svg")) return "unsupported-type";
+    if (lower.includes("foreignobject")) return "svg-unsupported-embed";
+    if (/\bdata:\s*image\/svg/.test(lower) || /\bdata:image\//.test(lower)) return "svg-nested-data";
+    if (countOccurrences(lower, "<use") > MAX_USE_ELEMENTS) return "svg-too-complex";
+    if (countOccurrences(lower, "<image") > MAX_IMAGE_ELEMENTS) return "svg-too-complex";
+    if (countOccurrences(lower, "<") > MAX_ELEMENTS) return "svg-too-complex";
+    return null;
+  }
+  function countOccurrences(text, needle) {
+    let count = 0;
+    let index = text.indexOf(needle);
+    while (index !== -1) {
+      count += 1;
+      if (count > MAX_ELEMENTS) return count;
+      index = text.indexOf(needle, index + needle.length);
+    }
+    return count;
+  }
+
   // src/client/image.js
   var WEBP_QUALITY = 0.9;
   var MAX_UPLOAD_BYTES = 8 * 1024 * 1024;
   var MAX_SOURCE_PIXELS = 4096 * 4096;
+  var MIN_RENDERED_EDGE = 4;
   var ImageInputError = class extends Error {
     constructor(reason) {
       super(reason);
@@ -396,31 +515,109 @@
       this.reason = reason;
     }
   };
-  async function readIconImageDataUrl(file) {
-    if (!(file instanceof Blob) || !file.type.startsWith("image/")) throw new ImageInputError("unsupported-type");
-    if (file.size > MAX_UPLOAD_BYTES) throw new ImageInputError("file-too-large");
-    const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" }).catch(() => {
-      throw new ImageInputError("unsupported-type");
-    });
+  function createIconImageReader(overrides = {}) {
+    const decodeBitmap = overrides.decodeBitmap ?? ((file) => createImageBitmap(file, { imageOrientation: "from-image" }));
+    const ImageCtor = overrides.ImageCtor;
+    const createCanvas = overrides.createCanvas ?? (() => document.createElement("canvas"));
+    const createObjectURL = overrides.createObjectURL ?? ((blob) => URL.createObjectURL(blob));
+    const revokeObjectURL = overrides.revokeObjectURL ?? ((url) => URL.revokeObjectURL(url));
+    async function readHeaderSize(file) {
+      if (typeof file.slice !== "function") return null;
+      const head = new Uint8Array(await file.slice(0, 64 * 1024).arrayBuffer());
+      return readImageSize(head);
+    }
+    async function openBitmap(file) {
+      const header = await readHeaderSize(file);
+      if (header !== null && header.width * header.height > MAX_SOURCE_PIXELS) {
+        throw new ImageInputError("too-many-pixels");
+      }
+      const bitmap = await decodeBitmap(file).catch(() => {
+        throw new ImageInputError("unsupported-type");
+      });
+      return {
+        vector: false,
+        width: bitmap.width,
+        height: bitmap.height,
+        draw: (context, box) => context.drawImage(bitmap, box.x, box.y, box.width, box.height),
+        close: () => bitmap.close()
+      };
+    }
+    async function openImageElement(file) {
+      if (file.size > SVG_MAX_BYTES) throw new ImageInputError("svg-too-large");
+      const text = await file.text();
+      const rejection = inspectSvg(text, file.size);
+      if (rejection !== null) throw new ImageInputError(rejection);
+      const blob = isSvgMediaType(file.type) ? file : new Blob([file], { type: SVG_TYPE });
+      const url = createObjectURL(blob);
+      const Ctor = ImageCtor ?? globalThis.Image;
+      let image;
+      try {
+        image = new Ctor();
+        image.src = url;
+        await image.decode();
+      } catch {
+        revokeObjectURL(url);
+        throw new ImageInputError("unsupported-type");
+      }
+      return {
+        vector: true,
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+        draw: (context, box) => context.drawImage(image, box.x, box.y, box.width, box.height),
+        close: () => revokeObjectURL(url)
+      };
+    }
+    return async function readIconImage(file) {
+      if (!(file instanceof Blob)) throw new ImageInputError("unsupported-type");
+      if (file.size > MAX_UPLOAD_BYTES) throw new ImageInputError("file-too-large");
+      const decoder = resolveImageSource(file.type, file.name);
+      if (decoder === null) throw new ImageInputError("unsupported-type");
+      const source = decoder === "element" ? await openImageElement(file) : await openBitmap(file);
+      try {
+        if (source.width <= 0 || source.height <= 0) throw new ImageInputError("empty-image");
+        if (!source.vector && source.width * source.height > MAX_SOURCE_PIXELS) throw new ImageInputError("too-many-pixels");
+        const box = containBox(source.width, source.height, ICON_CANVAS_SIZE);
+        if (box === null || box.width < MIN_RENDERED_EDGE || box.height < MIN_RENDERED_EDGE) {
+          throw new ImageInputError("extreme-aspect");
+        }
+        const canvas = createCanvas();
+        canvas.width = ICON_CANVAS_SIZE;
+        canvas.height = ICON_CANVAS_SIZE;
+        const context = canvas.getContext("2d");
+        if (context === null) throw new ImageInputError("canvas-unavailable");
+        context.clearRect(0, 0, ICON_CANVAS_SIZE, ICON_CANVAS_SIZE);
+        source.draw(context, box);
+        if (!hasOpaquePixel(context)) throw new ImageInputError("blank-image");
+        const dataUrl = encode(canvas);
+        if (dataUrl.length > MAX_IMAGE_DATA_URL_LENGTH) throw new ImageInputError("encoded-too-large");
+        return dataUrl;
+      } finally {
+        source.close();
+      }
+    };
+  }
+  function encode(canvas) {
     try {
-      if (bitmap.width * bitmap.height > MAX_SOURCE_PIXELS) throw new ImageInputError("too-many-pixels");
-      const box = containBox(bitmap.width, bitmap.height, ICON_CANVAS_SIZE);
-      if (box === null) throw new ImageInputError("empty-image");
-      const canvas = document.createElement("canvas");
-      canvas.width = ICON_CANVAS_SIZE;
-      canvas.height = ICON_CANVAS_SIZE;
-      const context = canvas.getContext("2d");
-      if (context === null) throw new ImageInputError("canvas-unavailable");
-      context.clearRect(0, 0, ICON_CANVAS_SIZE, ICON_CANVAS_SIZE);
-      context.drawImage(bitmap, box.x, box.y, box.width, box.height);
       const encoded = canvas.toDataURL("image/webp", WEBP_QUALITY);
-      const dataUrl = encoded.startsWith("data:image/webp") ? encoded : canvas.toDataURL("image/png");
-      if (dataUrl.length > MAX_IMAGE_DATA_URL_LENGTH) throw new ImageInputError("encoded-too-large");
-      return dataUrl;
-    } finally {
-      bitmap.close();
+      return encoded.startsWith("data:image/webp") ? encoded : canvas.toDataURL("image/png");
+    } catch (error) {
+      if (error?.name === "SecurityError") throw new ImageInputError("tainted-image");
+      throw error;
     }
   }
+  function hasOpaquePixel(context) {
+    let pixels;
+    try {
+      pixels = context.getImageData(0, 0, ICON_CANVAS_SIZE, ICON_CANVAS_SIZE).data;
+    } catch {
+      return true;
+    }
+    for (let index = 3; index < pixels.length; index += 4) {
+      if (pixels[index] !== 0) return true;
+    }
+    return false;
+  }
+  var readIconImageDataUrl = createIconImageReader();
 
   // src/client/dialog.js
   var COLOR_PRESETS = ["#1f2328", "#d1242f", "#0969da", "#1a7f37", "#8250df", "#bf3989", "#bc4c00", "#57606a"];
@@ -437,7 +634,14 @@
     "too-many-pixels": "error.tooManyPixels",
     "encoded-too-large": "error.encodedTooLarge",
     "canvas-unavailable": "error.unsupportedImage",
-    "empty-image": "error.unsupportedImage",
+    "empty-image": "error.emptyImage",
+    "blank-image": "error.blankImage",
+    "extreme-aspect": "error.extremeAspect",
+    "tainted-image": "error.taintedImage",
+    "svg-too-large": "error.svgTooLarge",
+    "svg-too-complex": "error.svgTooComplex",
+    "svg-nested-data": "error.svgNestedData",
+    "svg-unsupported-embed": "error.svgEmbed",
     "unsupported-type": "error.unsupportedImage"
   };
   function draftFromState(mode, state) {
@@ -459,6 +663,7 @@
       const [replaceIcon, setReplaceIcon] = React.useState(existing?.placement !== "prefix");
       const [imageError, setImageError] = React.useState(null);
       const fileInput = React.useRef(null);
+      const readStep = React.useRef(0);
       const state = { emoji, text, color, image, replaceIcon };
       const draft = draftFromState(mode, state);
       const message = imageError ?? (error === null ? null : t(ERROR_CODES[error] ?? "error.save"));
@@ -468,11 +673,15 @@
       };
       const applyFile = async (file) => {
         if (file === void 0) return;
+        const step = ++readStep.current;
         setImageError(null);
         try {
-          setImage(await readIconImageDataUrl(file));
+          const dataUrl = await readIconImageDataUrl(file);
+          if (step !== readStep.current) return;
+          setImage(dataUrl);
           setMode("image");
         } catch (failure) {
+          if (step !== readStep.current) return;
           setImageError(t(IMAGE_ERRORS[failure?.reason] ?? "error.unsupportedImage"));
         }
       };
@@ -611,7 +820,7 @@
         h2("input", {
           ref: fileInput,
           type: "file",
-          accept: "image/png,image/jpeg,image/webp",
+          accept: "image/png,image/jpeg,image/webp,image/svg+xml,.svg",
           hidden: true,
           onChange: pickFile
         }),
