@@ -8,7 +8,7 @@
 
 ```bash
 pnpm install
-node --test tests/*.test.mjs   # 93 项单元测试
+node --test tests/*.test.mjs   # 166 项单元测试
 node scripts/build.mjs         # 重建 client.js
 ```
 
@@ -19,7 +19,7 @@ node scripts/build.mjs         # 重建 client.js
 端到端脚本在 `.temp/e2e/`（不进版本库，需要 Playwright 与 Chrome）：
 
 ```bash
-cd .temp/e2e && ./run.sh                     # 起独立实例，跑 23 项交互断言
+cd .temp/e2e && ./run.sh                     # 起独立实例，跑 36 项交互断言
 cd .temp/e2e && E2E_DSH_HOME=/tmp/dsh-demo-home \
   E2E_SEED=seed-demo.mjs E2E_SCRIPT=demo.mjs ./run.sh   # 重录 README 的 docs/demo.gif
 ```

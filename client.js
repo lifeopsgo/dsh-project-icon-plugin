@@ -5,6 +5,7 @@
       "menu.item": "\u4FEE\u6539\u9879\u76EE\u56FE\u6807",
       "dialog.title": "\u4FEE\u6539\u9879\u76EE\u56FE\u6807",
       "tabs.emoji": "\u8868\u60C5",
+      "tabs.iconfont": "\u56FE\u6807\u5E93",
       "tabs.image": "\u56FE\u7247",
       "tabs.text": "\u6587\u5B57",
       "emoji.placeholder": "\u6216\u76F4\u63A5\u8F93\u5165\u4E00\u4E2A\u8868\u60C5",
@@ -27,6 +28,8 @@
       "error.storeCorrupt": "\u56FE\u6807\u6587\u4EF6\u5DF2\u635F\u574F\uFF0C\u8BF7\u4FEE\u590D\u6216\u5220\u9664\u540E\u91CD\u8BD5",
       "error.unauthorized": "\u767B\u5F55\u5DF2\u8FC7\u671F\uFF0C\u5237\u65B0\u9875\u9762\u540E\u91CD\u8BD5",
       "error.invalidPayload": "\u56FE\u6807\u6570\u636E\u4E0D\u5408\u6CD5\uFF0C\u91CD\u65B0\u9009\u4E00\u6B21",
+      "error.invalidQuery": "\u6362\u4E2A\u5173\u952E\u8BCD\u8BD5\u8BD5",
+      "error.iconfontUnavailable": "\u8FDE\u4E0D\u4E0A iconfont\uFF0C\u7A0D\u540E\u518D\u8BD5",
       "error.fileTooLarge": "\u56FE\u7247\u539F\u59CB\u6587\u4EF6\u592A\u5927\uFF0C\u6362\u4E00\u5F20\u5C0F\u4E8E 8 MB \u7684",
       "error.tooManyPixels": "\u56FE\u7247\u50CF\u7D20\u592A\u5927\uFF0C\u5148\u88C1\u526A\u4E00\u4E0B",
       "error.encodedTooLarge": "\u538B\u7F29\u540E\u4ECD\u8D85\u8FC7\u5355\u5F20\u56FE\u6807\u4E0A\u9650\uFF0C\u6362\u4E00\u5F20\u66F4\u7B80\u5355\u7684\u56FE",
@@ -38,12 +41,23 @@
       "error.svgTooLarge": "SVG \u8D85\u8FC7 512 KB\uFF0C\u6362\u5C0F\u4E00\u70B9\u7684\u6216\u5BFC\u51FA\u6210 PNG",
       "error.svgTooComplex": "SVG \u7ED3\u6784\u592A\u590D\u6742\uFF08\u91CD\u590D\u7684 use / image \u5143\u7D20\u8FC7\u591A\uFF09\uFF0C\u5BFC\u51FA\u6210 PNG \u518D\u8BD5",
       "error.svgNestedData": "SVG \u91CC\u4E0D\u80FD\u518D\u5D4C\u56FE\u7247\u6570\u636E\uFF0C\u5BFC\u51FA\u6210\u5355\u6587\u4EF6\u540E\u518D\u8BD5",
-      "error.svgEmbed": "SVG \u91CC\u5E26 foreignObject\uFF0C\u6D4F\u89C8\u5668\u65E0\u6CD5\u5B89\u5168\u7ED8\u5236\uFF0C\u5BFC\u51FA\u6210 PNG \u6216\u7EAF\u77E2\u91CF SVG"
+      "error.svgEmbed": "SVG \u91CC\u5E26 foreignObject\uFF0C\u6D4F\u89C8\u5668\u65E0\u6CD5\u5B89\u5168\u7ED8\u5236\uFF0C\u5BFC\u51FA\u6210 PNG \u6216\u7EAF\u77E2\u91CF SVG",
+      "error.timeout": "\u8FD9\u5F20\u56FE\u5904\u7406\u8D85\u65F6\uFF0C\u6362\u4E00\u5F20\u66F4\u7B80\u5355\u7684",
+      "iconfont.placeholder": "\u641C\u7D22 iconfont \u56FE\u6807\uFF0C\u56DE\u8F66\u5F00\u59CB",
+      "iconfont.search": "\u641C\u7D22",
+      "iconfont.loading": "\u641C\u7D22\u4E2D\u2026",
+      "iconfont.empty": "\u6CA1\u6709\u5339\u914D\u7684\u56FE\u6807\uFF0C\u6362\u4E2A\u5173\u952E\u8BCD",
+      "iconfont.hint": "\u4ECE iconfont.cn \u641C\u7D22\u516C\u5F00\u56FE\u6807\uFF0C\u9009\u4E2D\u540E\u6805\u683C\u5316\u6210\u672C\u5730\u56FE\u6807\uFF1B\u56FE\u6807\u7248\u6743\u5F52\u4E0A\u4F20\u8005\uFF0C\u5546\u7528\u524D\u8BF7\u67E5\u6240\u5C5E\u56FE\u6807\u5E93\u7684\u6388\u6743",
+      "iconfont.count": "\u547D\u4E2D {total} \u6761\uFF0C\u663E\u793A\u524D {shown} \u6761",
+      "iconfont.filtered": "\u547D\u4E2D\u7684\u56FE\u6807\u6CA1\u6709\u53EF\u7528\u7684\u77E2\u91CF\u6587\u4EF6\uFF0C\u6362\u4E2A\u5173\u952E\u8BCD",
+      "iconfont.badIcon": "\u8FD9\u4E2A\u56FE\u6807\u753B\u4E0D\u51FA\u6765\uFF0C\u6362\u4E00\u4E2A",
+      "iconfont.busy": "\u4E0A\u4E00\u6B21\u641C\u7D22\u8FD8\u6CA1\u7ED3\u675F\uFF0C\u7A0D\u7B49\u4E00\u4E0B"
     },
     en: {
       "menu.item": "Change project icon",
       "dialog.title": "Change project icon",
       "tabs.emoji": "Emoji",
+      "tabs.iconfont": "Library",
       "tabs.image": "Image",
       "tabs.text": "Text",
       "emoji.placeholder": "Or type one emoji",
@@ -66,6 +80,8 @@
       "error.storeCorrupt": "The icon file is corrupt; fix or remove it, then retry",
       "error.unauthorized": "Your session expired; reload the page and retry",
       "error.invalidPayload": "That icon data is invalid; pick it again",
+      "error.invalidQuery": "Try a different keyword",
+      "error.iconfontUnavailable": "Could not reach iconfont; try again later",
       "error.fileTooLarge": "That file is too large; use one under 8 MB",
       "error.tooManyPixels": "That image has too many pixels; crop it first",
       "error.encodedTooLarge": "Still over the per-icon limit after scaling; use a simpler image",
@@ -77,13 +93,25 @@
       "error.svgTooLarge": "The SVG is over 512 KB; use a smaller file or export a PNG",
       "error.svgTooComplex": "That SVG is too complex (too many repeated use/image elements); export a PNG instead",
       "error.svgNestedData": "The SVG embeds image data; export a single-file SVG and try again",
-      "error.svgEmbed": "The SVG contains foreignObject, which browsers cannot rasterize safely; export a PNG or a plain vector"
+      "error.svgEmbed": "The SVG contains foreignObject, which browsers cannot rasterize safely; export a PNG or a plain vector",
+      "error.timeout": "That image took too long to process; use a simpler one",
+      "iconfont.placeholder": "Search iconfont.cn and press Enter",
+      "iconfont.search": "Search",
+      "iconfont.loading": "Searching\u2026",
+      "iconfont.empty": "No matching icons; try another keyword",
+      "iconfont.hint": "Search public icons on iconfont.cn; a picked icon is rasterized locally. Copyright stays with the uploader, so check the repository license before commercial use",
+      "iconfont.count": "{total} matches, showing the first {shown}",
+      "iconfont.filtered": "The matches had no usable vector files; try another keyword",
+      "iconfont.badIcon": "That icon cannot be drawn; pick another",
+      "iconfont.busy": "The previous search is still running; give it a moment"
     }
   };
 
   // src/endpoint.js
   var ICONS_PATH = "/project-icon/icons";
   var ICONS_ROUTE = `${ICONS_PATH.slice(1)}`;
+  var ICONFONT_PATH = "/project-icon/iconfont";
+  var ICONFONT_ROUTE = `${ICONFONT_PATH.slice(1)}`;
 
   // src/icon-spec.js
   var ICON_DOCUMENT_VERSION = 1;
@@ -202,6 +230,26 @@
       cache: "no-store"
     });
     return readDocument(response);
+  }
+  async function searchIconfont(query, fetcher = fetch) {
+    const response = await fetcher(new URL(ICONFONT_PATH.slice(1), document.baseURI).toString(), {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ q: query }),
+      credentials: "same-origin",
+      cache: "no-store"
+    });
+    if (!response.ok) throw new IconsApiError(await readErrorCode(response), response.status);
+    const payload = await response.json();
+    const icons = Array.isArray(payload?.icons) ? payload.icons.filter(isSearchIcon) : [];
+    const upstreamCount = Number.isInteger(payload?.upstreamCount) ? payload.upstreamCount : icons.length;
+    return { icons, upstreamCount };
+  }
+  function isSearchIcon(value) {
+    if (typeof value !== "object" || value === null) return false;
+    if (!Number.isInteger(value.id) || value.id <= 0) return false;
+    if (typeof value.name !== "string") return false;
+    return typeof value.svg === "string" && value.svg.startsWith("<svg") && value.svg.length <= 2e4;
   }
   async function readDocument(response) {
     if (!response.ok) {
@@ -345,6 +393,51 @@
     return null;
   }
 
+  // src/limits.js
+  var MAX_QUERY_LENGTH = 32;
+
+  // src/svg-guard.js
+  var SVG_MAX_BYTES = 512 * 1024;
+  var MAX_ELEMENTS = 5e3;
+  var MAX_USE_ELEMENTS = 16;
+  var MAX_IMAGE_ELEMENTS = 8;
+  var MAX_PATHS = 2e3;
+  var MAX_PATH_DATA = 2e5;
+  var MAX_FILTERS = 32;
+  function inspectSvg(text, byteLength) {
+    if (typeof byteLength === "number" && byteLength > SVG_MAX_BYTES) return "svg-too-large";
+    if (typeof text !== "string") return "unsupported-type";
+    const lower = text.toLowerCase();
+    if (!lower.includes("<svg")) return "unsupported-type";
+    if (lower.includes("foreignobject")) return "svg-unsupported-embed";
+    if (/\bdata:\s*image\/svg/.test(lower) || /\bdata:image\//.test(lower)) return "svg-nested-data";
+    if (countOccurrences(lower, "<use") > MAX_USE_ELEMENTS) return "svg-too-complex";
+    if (countOccurrences(lower, "<image") > MAX_IMAGE_ELEMENTS) return "svg-too-complex";
+    if (countOccurrences(lower, "<") > MAX_ELEMENTS) return "svg-too-complex";
+    if (countOccurrences(lower, "<path") > MAX_PATHS) return "svg-too-complex";
+    if (countOccurrences(lower, "<filter") > MAX_FILTERS) return "svg-too-complex";
+    if (countPathData(lower) > MAX_PATH_DATA) return "svg-too-complex";
+    return null;
+  }
+  function countPathData(text) {
+    let total = 0;
+    for (const match of text.matchAll(/\sd=("[^"]*"|'[^']*')/g)) {
+      total += match[1].length;
+      if (total > MAX_PATH_DATA) return total;
+    }
+    return total;
+  }
+  function countOccurrences(text, needle) {
+    let count = 0;
+    let index = text.indexOf(needle);
+    while (index !== -1) {
+      count += 1;
+      if (count > MAX_ELEMENTS) return count;
+      index = text.indexOf(needle, index + needle.length);
+    }
+    return count;
+  }
+
   // src/client/emoji.js
   var EMOJI_CHOICES = [
     "\u{1F680}",
@@ -475,32 +568,100 @@
     return typeof type === "string" && SVG_MEDIA_TYPE_PATTERN.test(type.split(";")[0].trim().toLowerCase());
   }
 
-  // src/svg-guard.js
-  var SVG_MAX_BYTES = 512 * 1024;
-  var MAX_ELEMENTS = 2e4;
-  var MAX_USE_ELEMENTS = 16;
-  var MAX_IMAGE_ELEMENTS = 8;
-  function inspectSvg(text, byteLength) {
-    if (typeof byteLength === "number" && byteLength > SVG_MAX_BYTES) return "svg-too-large";
-    if (typeof text !== "string") return "unsupported-type";
-    const lower = text.toLowerCase();
-    if (!lower.includes("<svg")) return "unsupported-type";
-    if (lower.includes("foreignobject")) return "svg-unsupported-embed";
-    if (/\bdata:\s*image\/svg/.test(lower) || /\bdata:image\//.test(lower)) return "svg-nested-data";
-    if (countOccurrences(lower, "<use") > MAX_USE_ELEMENTS) return "svg-too-complex";
-    if (countOccurrences(lower, "<image") > MAX_IMAGE_ELEMENTS) return "svg-too-complex";
-    if (countOccurrences(lower, "<") > MAX_ELEMENTS) return "svg-too-complex";
-    return null;
-  }
-  function countOccurrences(text, needle) {
-    let count = 0;
-    let index = text.indexOf(needle);
-    while (index !== -1) {
-      count += 1;
-      if (count > MAX_ELEMENTS) return count;
-      index = text.indexOf(needle, index + needle.length);
+  // src/client/rasterizer.js
+  var WORKER_SOURCE = `
+self.onmessage = async (event) => {
+  const { bytes, type, size, maxPixels } = event.data
+  try {
+    const bitmap = await createImageBitmap(new Blob([bytes], { type }))
+    if (bitmap.width * bitmap.height > maxPixels) {
+      bitmap.close()
+      self.postMessage({ ok: false, reason: 'too-many-pixels' })
+      return
     }
-    return count;
+    const scale = Math.min(size / bitmap.width, size / bitmap.height)
+    const width = Math.max(1, Math.round(bitmap.width * scale))
+    const height = Math.max(1, Math.round(bitmap.height * scale))
+    const canvas = new OffscreenCanvas(size, size)
+    const context = canvas.getContext('2d')
+    context.clearRect(0, 0, size, size)
+    context.drawImage(bitmap, Math.round((size - width) / 2), Math.round((size - height) / 2), width, height)
+    bitmap.close()
+    const pixels = context.getImageData(0, 0, size, size).data
+    let opaque = false
+    for (let index = 3; index < pixels.length; index += 4) {
+      if (pixels[index] !== 0) {
+        opaque = true
+        break
+      }
+    }
+    if (!opaque) {
+      self.postMessage({ ok: false, reason: 'blank-image' })
+      return
+    }
+    const blob = await canvas.convertToBlob({ type: 'image/webp', quality: 0.9 })
+    const dataUrl = new FileReaderSync().readAsDataURL(blob)
+    self.postMessage({ ok: true, dataUrl })
+  } catch (error) {
+    self.postMessage({ ok: false, reason: 'unsupported-type', detail: String(error) })
+  }
+}
+`;
+  var DEFAULT_TIMEOUT_MS = 4e3;
+  var RasterizeError = class extends Error {
+    constructor(reason) {
+      super(reason);
+      this.name = "RasterizeError";
+      this.reason = reason;
+    }
+  };
+  function createRasterizer(options = {}) {
+    const WorkerCtor = options.WorkerCtor ?? (typeof Worker === "function" ? Worker : void 0);
+    const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    const canvasSize = options.canvasSize ?? 64;
+    const maxPixels = options.maxPixels ?? 4096 * 4096;
+    return async function rasterize(file) {
+      if (WorkerCtor === void 0) throw new RasterizeError("worker-unavailable");
+      const url = URL.createObjectURL(new Blob([WORKER_SOURCE], { type: "text/javascript" }));
+      let worker;
+      try {
+        worker = new WorkerCtor(url);
+      } catch {
+        URL.revokeObjectURL(url);
+        throw new RasterizeError("worker-unavailable");
+      }
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      try {
+        const payload = await withTimeout(
+          new Promise((resolve, reject) => {
+            worker.onmessage = (event) => resolve(event.data);
+            worker.onerror = () => reject(new RasterizeError("worker-failed"));
+            worker.postMessage({ bytes, type: file.type, size: canvasSize, maxPixels });
+          }),
+          timeoutMs
+        );
+        if (payload?.ok !== true) throw new RasterizeError(payload?.reason ?? "unsupported-type");
+        return payload.dataUrl;
+      } finally {
+        worker.terminate();
+        URL.revokeObjectURL(url);
+      }
+    };
+  }
+  function withTimeout(promise, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new RasterizeError("timeout")), timeoutMs);
+      promise.then(
+        (value) => {
+          clearTimeout(timer);
+          resolve(value);
+        },
+        (error) => {
+          clearTimeout(timer);
+          reject(error);
+        }
+      );
+    });
   }
 
   // src/client/image.js
@@ -516,6 +677,7 @@
     }
   };
   function createIconImageReader(overrides = {}) {
+    const offThreadRasterize = overrides.rasterize ?? createRasterizer({ canvasSize: ICON_CANVAS_SIZE });
     const decodeBitmap = overrides.decodeBitmap ?? ((file) => createImageBitmap(file, { imageOrientation: "from-image" }));
     const ImageCtor = overrides.ImageCtor;
     const createCanvas = overrides.createCanvas ?? (() => document.createElement("canvas"));
@@ -572,6 +734,20 @@
       if (file.size > MAX_UPLOAD_BYTES) throw new ImageInputError("file-too-large");
       const decoder = resolveImageSource(file.type, file.name);
       if (decoder === null) throw new ImageInputError("unsupported-type");
+      if (decoder === "bitmap") {
+        const header = await readHeaderSize(file);
+        if (header !== null && header.width * header.height > MAX_SOURCE_PIXELS) {
+          throw new ImageInputError("too-many-pixels");
+        }
+        try {
+          const dataUrl = await offThreadRasterize(file);
+          return validateEncoded(dataUrl);
+        } catch (error) {
+          if (error?.reason !== "worker-unavailable" && error?.reason !== "worker-failed") {
+            throw error instanceof ImageInputError ? error : new ImageInputError(error?.reason ?? "unsupported-type");
+          }
+        }
+      }
       const source = decoder === "element" ? await openImageElement(file) : await openBitmap(file);
       try {
         if (source.width <= 0 || source.height <= 0) throw new ImageInputError("empty-image");
@@ -588,13 +764,18 @@
         context.clearRect(0, 0, ICON_CANVAS_SIZE, ICON_CANVAS_SIZE);
         source.draw(context, box);
         if (!hasOpaquePixel(context)) throw new ImageInputError("blank-image");
-        const dataUrl = encode(canvas);
-        if (dataUrl.length > MAX_IMAGE_DATA_URL_LENGTH) throw new ImageInputError("encoded-too-large");
-        return dataUrl;
+        return validateEncoded(encode(canvas));
       } finally {
         source.close();
       }
     };
+  }
+  function validateEncoded(dataUrl) {
+    if (typeof dataUrl !== "string" || !/^data:image\/(webp|png);base64,/.test(dataUrl)) {
+      throw new ImageInputError("unsupported-type");
+    }
+    if (dataUrl.length > MAX_IMAGE_DATA_URL_LENGTH) throw new ImageInputError("encoded-too-large");
+    return dataUrl;
   }
   function encode(canvas) {
     try {
@@ -642,12 +823,22 @@
     "svg-too-complex": "error.svgTooComplex",
     "svg-nested-data": "error.svgNestedData",
     "svg-unsupported-embed": "error.svgEmbed",
+    timeout: "error.timeout",
+    "worker-failed": "error.timeout",
     "unsupported-type": "error.unsupportedImage"
+  };
+  var SEARCH_ERRORS = {
+    "invalid-query": "error.invalidQuery",
+    "iconfont-unavailable": "error.iconfontUnavailable",
+    unauthorized: "error.unauthorized",
+    "request-failed": "error.requestFailed",
+    "iconfont-busy": "iconfont.busy"
   };
   function draftFromState(mode, state) {
     const placement = state.replaceIcon ? "replace" : "prefix";
     if (mode === "emoji") return normalizeIconSpec({ kind: "emoji", value: state.emoji, placement });
     if (mode === "text") return normalizeIconSpec({ kind: "text", value: state.text, color: state.color, placement });
+    if (mode === "iconfont" && state.image === "") return null;
     return normalizeIconSpec({ kind: "image", value: state.image, placement });
   }
   function createIconDialog(React, primitives) {
@@ -660,10 +851,14 @@
       const [text, setText] = React.useState(existing?.kind === "text" ? existing.value : "");
       const [color, setColor] = React.useState(existing?.kind === "text" ? existing.color : COLOR_PRESETS[0]);
       const [image, setImage] = React.useState(existing?.kind === "image" ? existing.value : "");
+      const [query, setQuery] = React.useState("");
+      const [search, setSearch] = React.useState({ status: "idle", results: [], upstreamCount: 0, error: null, pendingId: null });
+      const [appliedId, setAppliedId] = React.useState(null);
       const [replaceIcon, setReplaceIcon] = React.useState(existing?.placement !== "prefix");
       const [imageError, setImageError] = React.useState(null);
       const fileInput = React.useRef(null);
       const readStep = React.useRef(0);
+      const searchStep = React.useRef(0);
       const state = { emoji, text, color, image, replaceIcon };
       const draft = draftFromState(mode, state);
       const message = imageError ?? (error === null ? null : t(ERROR_CODES[error] ?? "error.save"));
@@ -675,6 +870,7 @@
         if (file === void 0) return;
         const step = ++readStep.current;
         setImageError(null);
+        setSearch((current) => ({ ...current, error: null }));
         try {
           const dataUrl = await readIconImageDataUrl(file);
           if (step !== readStep.current) return;
@@ -683,6 +879,52 @@
         } catch (failure) {
           if (step !== readStep.current) return;
           setImageError(t(IMAGE_ERRORS[failure?.reason] ?? "error.unsupportedImage"));
+        }
+      };
+      const updateQuery = (value) => {
+        setQuery(value);
+        setSearch((current) => ({ ...current, status: "idle", results: [], upstreamCount: 0, error: null, pendingId: null }));
+        setAppliedId(null);
+      };
+      const runSearch = async () => {
+        const keyword = query.trim();
+        if (keyword === "" || search.status === "loading") return;
+        const step = ++searchStep.current;
+        setSearch((current) => ({ ...current, status: "loading", error: null, pendingId: null }));
+        try {
+          const payload = await searchIconfont(keyword);
+          if (step !== searchStep.current) return;
+          const usable = payload.icons.filter((icon) => inspectSvg(icon.svg, icon.svg.length) === null).map((icon) => ({ ...icon, thumb: svgDataUrl(icon.svg) }));
+          setSearch({
+            status: "ready",
+            results: usable,
+            upstreamCount: Math.max(payload.upstreamCount, usable.length),
+            error: null,
+            pendingId: null
+          });
+        } catch (failure) {
+          if (step !== searchStep.current) return;
+          setSearch({
+            status: "failed",
+            results: [],
+            upstreamCount: 0,
+            error: t(SEARCH_ERRORS[failure?.code] ?? "error.iconfontUnavailable"),
+            pendingId: null
+          });
+        }
+      };
+      const chooseResult = async (icon) => {
+        const step = ++readStep.current;
+        setSearch((current) => ({ ...current, error: null, pendingId: icon.id }));
+        try {
+          const dataUrl = await readIconImageDataUrl(new File([icon.svg], `${icon.name}.svg`, { type: "image/svg+xml" }));
+          if (step !== readStep.current) return;
+          setImage(dataUrl);
+          setAppliedId(icon.id);
+          setSearch((current) => ({ ...current, pendingId: null }));
+        } catch {
+          if (step !== readStep.current) return;
+          setSearch((current) => ({ ...current, pendingId: null, error: t("iconfont.badIcon") }));
         }
       };
       const pickFile = (event) => {
@@ -735,27 +977,46 @@
               role: "tab",
               className: "dsh-project-icon-tab",
               "aria-selected": mode === "emoji",
-              onClick: () => setMode("emoji")
+              onClick: () => {
+                readStep.current += 1;
+                setMode("emoji");
+              }
             }, t("tabs.emoji")),
             h("button", {
               type: "button",
               role: "tab",
               className: "dsh-project-icon-tab",
+              "aria-selected": mode === "iconfont",
+              onClick: () => {
+                readStep.current += 1;
+                setMode("iconfont");
+              }
+            }, t("tabs.iconfont")),
+            h("button", {
+              type: "button",
+              role: "tab",
+              className: "dsh-project-icon-tab",
               "aria-selected": mode === "image",
-              onClick: () => setMode("image")
+              onClick: () => {
+                readStep.current += 1;
+                setMode("image");
+              }
             }, t("tabs.image")),
             h("button", {
               type: "button",
               role: "tab",
               className: "dsh-project-icon-tab",
               "aria-selected": mode === "text",
-              onClick: () => setMode("text")
+              onClick: () => {
+                readStep.current += 1;
+                setMode("text");
+              }
             }, t("tabs.text"))
           ),
           h(
             "div",
             { className: "dsh-project-icon-pane" },
-            mode === "emoji" ? h(EmojiBody, { emoji, setEmoji, setMode, t, h }) : mode === "image" ? h(ImageBody, { image, fileInput, pickFile, applyFile, t, h }) : h(TextBody, { text, color, setText, setColor, setMode, t, h })
+            mode === "emoji" ? h(EmojiBody, { emoji, setEmoji, setMode, t, h }) : mode === "iconfont" ? h(IconfontBody, { query, updateQuery, search, appliedId, runSearch, chooseResult, t, h }) : mode === "image" ? h(ImageBody, { image, fileInput, pickFile, applyFile, t, h }) : h(TextBody, { text, color, setText, setColor, setMode, t, h })
           ),
           h(
             "div",
@@ -797,6 +1058,68 @@
             setEmoji(event.target.value);
           }
         })
+      );
+    }
+    function IconfontBody({ query, updateQuery, search, appliedId, runSearch, chooseResult, t, h: h2 }) {
+      const loading = search.status === "loading";
+      const body = () => {
+        if (search.status === "idle") return h2("div", { className: "dsh-project-icon-hint" }, t("iconfont.hint"));
+        if (loading) return h2("div", { className: "dsh-project-icon-hint" }, t("iconfont.loading"));
+        if (search.results.length === 0) {
+          return h2(
+            "div",
+            { className: "dsh-project-icon-hint" },
+            search.upstreamCount > 0 ? t("iconfont.filtered") : t("iconfont.empty")
+          );
+        }
+        return h2(
+          React.Fragment,
+          null,
+          h2(
+            "div",
+            { className: "dsh-project-icon-results", role: "group" },
+            search.results.map((icon) => h2("button", {
+              key: icon.id,
+              type: "button",
+              className: "dsh-project-icon-result",
+              "aria-label": icon.name,
+              "aria-pressed": appliedId === icon.id,
+              "data-pending": search.pendingId === icon.id ? "true" : void 0,
+              title: icon.name,
+              onClick: () => void chooseResult(icon)
+            }, h2("img", { src: icon.thumb, alt: "", role: "presentation", width: 26, height: 26 })))
+          ),
+          search.upstreamCount > search.results.length ? h2("div", { className: "dsh-project-icon-hint" }, t("iconfont.count", { shown: search.results.length, total: search.upstreamCount })) : null
+        );
+      };
+      return h2(
+        "div",
+        { className: "dsh-project-icon-iconfont-body" },
+        h2(
+          "div",
+          { className: "dsh-project-icon-search" },
+          h2("input", {
+            className: "dsh-project-icon-input",
+            value: query,
+            maxLength: MAX_QUERY_LENGTH,
+            placeholder: t("iconfont.placeholder"),
+            "aria-label": t("iconfont.placeholder"),
+            onChange: (event) => updateQuery(event.target.value),
+            onKeyDown: (event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                void runSearch();
+              }
+            }
+          }),
+          h2(
+            Button,
+            { variant: "outline", disabled: loading || query.trim() === "", onClick: () => void runSearch() },
+            loading ? t("iconfont.loading") : t("iconfont.search")
+          )
+        ),
+        search.error === null ? null : h2("div", { className: "dsh-project-icon-error", role: "alert" }, search.error),
+        body()
       );
     }
     function ImageBody({ image, fileInput, pickFile, applyFile, t, h: h2 }) {
@@ -872,6 +1195,15 @@
       );
     }
   }
+  function svgDataUrl(svg) {
+    return `data:image/svg+xml;base64,${toBase64(svg)}`;
+  }
+  function toBase64(text) {
+    const bytes = new TextEncoder().encode(text);
+    let binary = "";
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    return btoa(binary);
+  }
   function preview(spec, h) {
     if (spec.kind === "image") {
       return h("img", { className: "dsh-project-icon-preview-image", src: spec.value, alt: "", role: "presentation" });
@@ -886,12 +1218,20 @@
   var STYLES = `
 .dsh-project-icon-modal{width:min(520px,calc(100vw - 48px));max-width:none}
 .dsh-project-icon-body{display:flex;flex-direction:column;gap:16px;width:100%}
-.dsh-project-icon-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:3px;border:1px solid var(--dsw-alias-border-l1);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}
+.dsh-project-icon-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:3px;border:1px solid var(--dsw-alias-border-l1);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}
 .dsh-project-icon-tab{height:30px;border:0;border-radius:7px;background:none;color:var(--dsw-alias-label-secondary);font:inherit;font-size:13px;line-height:18px;cursor:pointer;transition:background .15s ease,color .15s ease}
 .dsh-project-icon-tab:hover{color:var(--dsw-alias-label-primary)}
 .dsh-project-icon-tab[aria-selected="true"]{background:var(--dsw-alias-bg-base);color:var(--dsw-alias-label-primary);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .dsh-project-icon-emoji-body,.dsh-project-icon-text-body{display:flex;flex-direction:column;gap:10px}
 .dsh-project-icon-image-body{display:flex;flex-direction:column;gap:8px}
+.dsh-project-icon-iconfont-body{display:flex;flex-direction:column;gap:10px}
+.dsh-project-icon-search{display:flex;align-items:center;gap:8px}
+.dsh-project-icon-results{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;max-height:132px;overflow:auto;padding:2px}
+.dsh-project-icon-result{display:flex;align-items:center;justify-content:center;height:44px;padding:0;border:1px solid var(--dsw-alias-border-l1);border-radius:8px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);cursor:pointer;transition:border-color .12s ease,background .12s ease}
+.dsh-project-icon-result:hover{border-color:var(--dsw-alias-brand-primary);background:var(--dsw-alias-bg-layer-2)}
+.dsh-project-icon-result[aria-pressed="true"]{border-color:var(--dsw-alias-brand-primary);background:var(--dsw-alias-bg-layer-2);box-shadow:0 0 0 2px var(--dsw-alias-brand-primary) inset}
+.dsh-project-icon-result[data-pending="true"]{opacity:.45;cursor:progress}
+.dsh-project-icon-result img{width:26px;height:26px;object-fit:contain;pointer-events:none}
 .dsh-project-icon-pane{display:flex;flex-direction:column;justify-content:flex-start;min-height:156px}
 .dsh-project-icon-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;max-height:168px;overflow:auto;padding:2px 4px 2px 2px}
 .dsh-project-icon-emoji{display:flex;align-items:center;justify-content:center;height:34px;padding:0;border:1px solid transparent;border-radius:8px;background:none;font-size:18px;line-height:1;cursor:pointer;transition:background .12s ease,border-color .12s ease}

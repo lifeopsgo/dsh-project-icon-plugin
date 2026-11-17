@@ -1,5 +1,6 @@
-import { ICONS_PATH } from './src/endpoint.js'
-import { createIconsHandler } from './src/routes.js'
+import { ICONFONT_PATH, ICONS_PATH } from './src/endpoint.js'
+import { createIconfontSearch } from './src/iconfont.js'
+import { createIconfontHandler, createIconsHandler } from './src/routes.js'
 import { readIconsDocument, upsertIcon } from './src/store.js'
 
 export const inject = ['webServer', 'connection']
@@ -15,6 +16,16 @@ export function apply(ctx, config = {}) {
   ctx.effect(
     () => ctx.webServer.register({ kind: 'exact', path: ICONS_PATH, handler }),
     `project icon: ${ICONS_PATH}`,
+  )
+
+  const iconfontHandler = createIconfontHandler({
+    search: createIconfontSearch(),
+    rejectRequest: (request) => ctx.connection.requestRejection(request),
+    logError: (error) => console.warn('project-icon: iconfont', error?.code ?? 'failed'),
+  })
+  ctx.effect(
+    () => ctx.webServer.register({ kind: 'exact', path: ICONFONT_PATH, handler: iconfontHandler }),
+    `project icon: ${ICONFONT_PATH}`,
   )
 }
 

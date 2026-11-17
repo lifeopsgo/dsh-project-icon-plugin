@@ -32,9 +32,19 @@ test('inspectSvg_manyImageElements_rejectsAsTooComplex', () => {
   assert.equal(inspectSvg(wrap(inner), 512), 'svg-too-complex')
 })
 
-test('inspectSvg_tooManyElements_rejectsAsTooComplex', () => {
-  const inner = '<rect/>'.repeat(20001)
+test('inspectSvg_elementCountAtLimit_acceptsIt', () => {
+  const inner = '<rect/>'.repeat(4998)
+  assert.equal(inspectSvg(wrap(inner), 200000), null)
+})
+
+test('inspectSvg_elementCountOverLimit_rejectsAsTooComplex', () => {
+  const inner = '<rect/>'.repeat(5000)
   assert.equal(inspectSvg(wrap(inner), 200000), 'svg-too-complex')
+})
+
+test('inspectSvg_singleQuotedPathData_countsTowardLimit', () => {
+  const inner = `<path d='${'M0 0L1 1'.repeat(40000)}'/>`
+  assert.equal(inspectSvg(wrap(inner), 400000), 'svg-too-complex')
 })
 
 test('inspectSvg_oversizedFile_rejectsAsTooLarge', () => {

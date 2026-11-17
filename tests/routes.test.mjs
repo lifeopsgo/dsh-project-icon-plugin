@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { createIconsHandler } from '../src/routes.js'
+import { createIconfontHandler, createIconsHandler } from '../src/routes.js'
 import { DocumentTooLargeError, IconLimitError, StoreCorruptError } from '../src/store.js'
 
 function request(method, body, chunkSize) {
@@ -212,4 +212,78 @@ test('handle_rejectedRequest_doesNotReadBodyOrWrite', async () => {
   assert.deepEqual(JSON.parse(res.payload), { code: 'unauthorized' })
   assert.equal(req.reads, 0)
   assert.equal(saves.length, 0)
+})
+
+
+function iconfontHandler(overrides = {}) {
+  const queries = []
+  const logs = []
+  const instance = createIconfontHandler({
+    search: async (query) => {
+      queries.push(query)
+      return { icons: [{ id: 1, name: 'rocket', width: 1024, height: 1024, svg: '<svg/>' }], upstreamCount: 1 }
+    },
+    rejectRequest: () => undefined,
+    logError: (error) => logs.push(error),
+    ...overrides,
+  })
+  return { instance, queries, logs }
+}
+
+test('handleIconfont_post_returnsIcons', async () => {
+  const { instance, queries } = iconfontHandler()
+  const res = response()
+  await instance(request('POST', JSON.stringify({ q: 'rocket' })), res)
+  assert.equal(res.statusCode, 200)
+  assert.deepEqual(JSON.parse(res.payload), { icons: [{ id: 1, name: 'rocket', width: 1024, height: 1024, svg: '<svg/>' }], upstreamCount: 1 })
+  assert.deepEqual(queries, ['rocket'])
+})
+
+test('handleIconfont_malformedJson_returnsInvalidPayload', async () => {
+  const { instance, queries } = iconfontHandler()
+  const res = response()
+  await instance(request('POST', '{oops'), res)
+  assert.equal(res.statusCode, 400)
+  assert.deepEqual(JSON.parse(res.payload), { code: 'invalid-payload' })
+  assert.equal(queries.length, 0)
+})
+
+test('handleIconfont_blankQuery_returnsInvalidQuery', async () => {
+  const { instance, queries } = iconfontHandler()
+  const res = response()
+  await instance(request('POST', JSON.stringify({ q: '   ' })), res)
+  assert.equal(res.statusCode, 400)
+  assert.deepEqual(JSON.parse(res.payload), { code: 'invalid-query' })
+  assert.equal(queries.length, 0)
+})
+
+test('handleIconfont_upstreamUnavailable_returns502', async () => {
+  const { instance, logs } = iconfontHandler({
+    search: async () => {
+      const error = new Error('upstream')
+      error.code = 'iconfont-unavailable'
+      throw error
+    },
+  })
+  const res = response()
+  await instance(request('POST', JSON.stringify({ q: 'rocket' })), res)
+  assert.equal(res.statusCode, 502)
+  assert.deepEqual(JSON.parse(res.payload), { code: 'iconfont-unavailable' })
+  assert.equal(logs.length, 1)
+})
+
+test('handleIconfont_getMethod_returns405', async () => {
+  const { instance } = iconfontHandler()
+  const res = response()
+  await instance(request('GET'), res)
+  assert.equal(res.statusCode, 405)
+  assert.equal(res.headers.allow, 'POST')
+})
+
+test('handleIconfont_rejectedRequest_doesNotSearch', async () => {
+  const { instance, queries } = iconfontHandler({ rejectRequest: () => 401 })
+  const res = response()
+  await instance(request('POST', JSON.stringify({ q: 'rocket' })), res)
+  assert.equal(res.statusCode, 401)
+  assert.equal(queries.length, 0)
 })

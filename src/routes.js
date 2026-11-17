@@ -1,10 +1,16 @@
 import { ICON_DOCUMENT_VERSION, normalizeIconSpec, normalizeWorkspaceId } from './icon-spec.js'
+import { MAX_QUERY_LENGTH } from './limits.js'
 
 const CONTENT_TYPE = 'application/json; charset=utf-8'
 const ALLOWED_METHODS = 'GET, POST'
 const MAX_BODY_BYTES = 96 * 1024
+const MAX_SEARCH_BODY_BYTES = 8 * 1024
+
 const ERROR_STATUS = {
   'invalid-payload': 400,
+  'invalid-query': 400,
+  'iconfont-unavailable': 502,
+  'iconfont-busy': 429,
   'payload-too-large': 413,
   'icon-limit': 409,
   'store-full': 409,
@@ -56,6 +62,57 @@ export function createIconsHandler({ readIcons, saveIcon, rejectRequest, logErro
     res.setHeader('allow', ALLOWED_METHODS)
     respond(res, ERROR_STATUS['method-not-allowed'], { code: 'method-not-allowed' })
   }
+}
+
+export function createIconfontHandler({ search, rejectRequest, logError = () => {} }) {
+  return async function handle(req, res) {
+    const rejection = rejectRequest(req)
+    if (rejection !== undefined) {
+      respond(res, rejection, { code: 'unauthorized' })
+      return
+    }
+    if (req.method !== 'POST') {
+      res.setHeader('allow', 'POST')
+      respond(res, ERROR_STATUS['method-not-allowed'], { code: 'method-not-allowed' })
+      return
+    }
+    const body = await readBody(req, MAX_SEARCH_BODY_BYTES)
+    if (body === null) {
+      req.resume?.()
+      respond(res, ERROR_STATUS['payload-too-large'], { code: 'payload-too-large' })
+      return
+    }
+    const parsed = parseSearchRequest(body)
+    if (parsed.reason !== null) {
+      respond(res, ERROR_STATUS[parsed.reason], { code: parsed.reason })
+      return
+    }
+    const request = parsed.request
+    try {
+      const result = await search(request.query)
+      respond(res, 200, { icons: result.icons, upstreamCount: result.upstreamCount })
+    } catch (error) {
+      logError(error)
+      const code = error?.code === 'invalid-query' || error?.code === 'iconfont-busy' ? error.code : 'iconfont-unavailable'
+      respond(res, ERROR_STATUS[code], { code })
+    }
+  }
+}
+
+function parseSearchRequest(body) {
+  let parsed
+  try {
+    parsed = JSON.parse(body)
+  } catch {
+    return { reason: 'invalid-payload', request: null }
+  }
+  if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+    return { reason: 'invalid-payload', request: null }
+  }
+  if (typeof parsed.q !== 'string') return { reason: 'invalid-payload', request: null }
+  const query = parsed.q.trim()
+  if (query === '' || query.length > MAX_QUERY_LENGTH) return { reason: 'invalid-query', request: null }
+  return { reason: null, request: { query } }
 }
 
 export { ICON_DOCUMENT_VERSION }

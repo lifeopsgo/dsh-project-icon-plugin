@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-project-icon",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Per-workspace folder icons in the sidebar, stored on the host.",
   "type": "module",

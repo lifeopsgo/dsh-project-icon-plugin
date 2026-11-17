@@ -1,4 +1,4 @@
-import { ICONS_PATH } from '../endpoint.js'
+import { ICONFONT_PATH, ICONS_PATH } from '../endpoint.js'
 import { ICON_DOCUMENT_VERSION, normalizeIconMap, normalizeIconSpec, normalizeWorkspaceId } from '../icon-spec.js'
 
 export class IconsApiError extends Error {
@@ -36,6 +36,28 @@ export async function saveIcon(workspaceId, spec, fetcher = fetch) {
     cache: 'no-store',
   })
   return readDocument(response)
+}
+
+export async function searchIconfont(query, fetcher = fetch) {
+  const response = await fetcher(new URL(ICONFONT_PATH.slice(1), document.baseURI).toString(), {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ q: query }),
+    credentials: 'same-origin',
+    cache: 'no-store',
+  })
+  if (!response.ok) throw new IconsApiError(await readErrorCode(response), response.status)
+  const payload = await response.json()
+  const icons = Array.isArray(payload?.icons) ? payload.icons.filter(isSearchIcon) : []
+  const upstreamCount = Number.isInteger(payload?.upstreamCount) ? payload.upstreamCount : icons.length
+  return { icons, upstreamCount }
+}
+
+function isSearchIcon(value) {
+  if (typeof value !== 'object' || value === null) return false
+  if (!Number.isInteger(value.id) || value.id <= 0) return false
+  if (typeof value.name !== 'string') return false
+  return typeof value.svg === 'string' && value.svg.startsWith('<svg') && value.svg.length <= 20000
 }
 
 async function readDocument(response) {

@@ -2,6 +2,7 @@ import { ICON_CANVAS_SIZE, containBox } from '../image-fit.js'
 import { readImageSize } from '../image-header.js'
 import { isSvgMediaType, resolveImageSource, SVG_TYPE } from '../image-source.js'
 import { inspectSvg, SVG_MAX_BYTES } from '../svg-guard.js'
+import { createRasterizer } from './rasterizer.js'
 import { MAX_IMAGE_DATA_URL_LENGTH } from '../icon-spec.js'
 
 const WEBP_QUALITY = 0.9
@@ -18,6 +19,7 @@ export class ImageInputError extends Error {
 }
 
 export function createIconImageReader(overrides = {}) {
+  const offThreadRasterize = overrides.rasterize ?? createRasterizer({ canvasSize: ICON_CANVAS_SIZE })
   const decodeBitmap = overrides.decodeBitmap
     ?? ((file) => createImageBitmap(file, { imageOrientation: 'from-image' }))
   const ImageCtor = overrides.ImageCtor
@@ -80,6 +82,21 @@ export function createIconImageReader(overrides = {}) {
     const decoder = resolveImageSource(file.type, file.name)
     if (decoder === null) throw new ImageInputError('unsupported-type')
 
+    if (decoder === 'bitmap') {
+      const header = await readHeaderSize(file)
+      if (header !== null && header.width * header.height > MAX_SOURCE_PIXELS) {
+        throw new ImageInputError('too-many-pixels')
+      }
+      try {
+        const dataUrl = await offThreadRasterize(file)
+        return validateEncoded(dataUrl)
+      } catch (error) {
+        if (error?.reason !== 'worker-unavailable' && error?.reason !== 'worker-failed') {
+          throw error instanceof ImageInputError ? error : new ImageInputError(error?.reason ?? 'unsupported-type')
+        }
+      }
+    }
+
     const source = decoder === 'element' ? await openImageElement(file) : await openBitmap(file)
     try {
       if (source.width <= 0 || source.height <= 0) throw new ImageInputError('empty-image')
@@ -98,13 +115,19 @@ export function createIconImageReader(overrides = {}) {
       source.draw(context, box)
       if (!hasOpaquePixel(context)) throw new ImageInputError('blank-image')
 
-      const dataUrl = encode(canvas)
-      if (dataUrl.length > MAX_IMAGE_DATA_URL_LENGTH) throw new ImageInputError('encoded-too-large')
-      return dataUrl
+      return validateEncoded(encode(canvas))
     } finally {
       source.close()
     }
   }
+}
+
+function validateEncoded(dataUrl) {
+  if (typeof dataUrl !== 'string' || !/^data:image\/(webp|png);base64,/.test(dataUrl)) {
+    throw new ImageInputError('unsupported-type')
+  }
+  if (dataUrl.length > MAX_IMAGE_DATA_URL_LENGTH) throw new ImageInputError('encoded-too-large')
+  return dataUrl
 }
 
 function encode(canvas) {

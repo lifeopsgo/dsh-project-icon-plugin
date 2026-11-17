@@ -154,6 +154,23 @@ test('readIconImageDataUrl_fullyTransparentResult_throwsBlankImage', async () =>
   await assert.rejects(read(new File([new Uint8Array(4)], 'a.png', { type: 'image/png' })), { reason: 'blank-image' })
 })
 
+test('readIconImageDataUrl_hugeBitmapHeader_rejectsBeforeRasterizing', async () => {
+  let rasterized = 0
+  const read = createIconImageReader({
+    rasterize: async () => {
+      rasterized += 1
+      return WEBP
+    },
+  })
+  const header = new Uint8Array(24)
+  header.set([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a], 0)
+  header.set([0x00, 0x00, 0x27, 0x10], 16)
+  header.set([0x00, 0x00, 0x27, 0x10], 20)
+  const file = new File([header], 'huge.png', { type: 'image/png' })
+  await assert.rejects(read(file), { reason: 'too-many-pixels' })
+  assert.equal(rasterized, 0)
+})
+
 test('readIconImageDataUrl_oversizedUpload_throwsFileTooLarge', async () => {
   const read = createIconImageReader({})
   const file = new File([new Uint8Array(8 * 1024 * 1024 + 1)], 'big.png', { type: 'image/png' })
