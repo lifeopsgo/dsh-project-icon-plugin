@@ -5,7 +5,7 @@
 **给侧边栏的每个工作区一个自己的图标：表情、图片，或文字加颜色。**
 
 [![platform](https://img.shields.io/badge/platform-DSH%20WebUI-2b7cd3?style=flat-square)](#安装)
-![tests](https://img.shields.io/badge/tests-166%20passing-3fb950?style=flat-square)
+![tests](https://img.shields.io/badge/tests-189%20passing-3fb950?style=flat-square)
 [![release](https://img.shields.io/github/v/release/lifeopsgo/dsh-project-icon-plugin?style=flat-square)](https://github.com/lifeopsgo/dsh-project-icon-plugin/releases)
 [![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
 
@@ -26,7 +26,7 @@
 1. 鼠标移到侧边栏的工作区行，点右侧 `...`，或直接右键该行。
 2. 选「修改项目图标」。
 3. 用四种方式之一挑图标：
-   - **表情**：点选或直接输入；
+   - **表情**：295 个图标按「常用 / 表情 / 自然 / 食物 / 活动 / 开发 / 其他」分组，常用组按使用频率排序；支持中英文关键词搜索，也可以直接粘贴任意表情；
    - **图标库**：匿名搜索 [iconfont.cn](https://www.iconfont.cn/) 的公开图标，选中即用（无需登录，搜索经 Host 代理转发；图标版权归上传者）；
    - **图片**：PNG / JPEG / WebP / SVG，点击选择或拖进来；
    - **文字**：1 到 2 个字符，可配颜色。

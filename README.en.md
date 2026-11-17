@@ -5,7 +5,7 @@
 **Give every workspace in the DSH sidebar its own icon: emoji, image, or text with a color.**
 
 [![platform](https://img.shields.io/badge/platform-DSH%20WebUI-2b7cd3?style=flat-square)](#install)
-![tests](https://img.shields.io/badge/tests-166%20passing-3fb950?style=flat-square)
+![tests](https://img.shields.io/badge/tests-189%20passing-3fb950?style=flat-square)
 [![release](https://img.shields.io/github/v/release/lifeopsgo/dsh-project-icon-plugin?style=flat-square)](https://github.com/lifeopsgo/dsh-project-icon-plugin/releases)
 [![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
 
@@ -26,7 +26,7 @@ This plugin targets the DSH 0.2 line: `engines.dsh` is `>=0.2.2-rc.3 <0.3.0`. Up
 1. Hover a workspace row in the sidebar and click the `...` button, or right-click the row.
 2. Choose **Change project icon**.
 3. Pick an icon one of four ways:
-   - **Emoji**: click one or type it.
+   - **Emoji**: 295 icons grouped into Popular, Smileys, Nature, Food, Activities, Dev, and Other; the Popular group follows usage frequency. Search by Chinese or English keyword, or paste any emoji.
    - **Library**: search public icons on [iconfont.cn](https://www.iconfont.cn/) and pick one. No login needed; the search is proxied through the host, and icon copyright stays with its uploader.
    - **Image**: PNG, JPEG, WebP, or SVG; click to choose or drop a file.
    - **Text**: 1 to 2 characters with a color.

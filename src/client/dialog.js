@@ -1,7 +1,7 @@
-import { TEXT_INPUT_MAX_LENGTH, normalizeIconSpec } from '../icon-spec.js'
+import { MAX_EMOJI_CODE_UNITS, TEXT_INPUT_MAX_LENGTH, normalizeIconSpec } from '../icon-spec.js'
 import { MAX_QUERY_LENGTH } from '../limits.js'
 import { inspectSvg } from '../svg-guard.js'
-import { EMOJI_CHOICES } from './emoji.js'
+import { groupEmoji, searchEmoji } from './emoji.js'
 import { searchIconfont } from './api.js'
 import { ImageInputError, readIconImageDataUrl } from './image.js'
 
@@ -56,6 +56,7 @@ export function createIconDialog(React, primitives) {
     const existing = icons[editor.workspaceId]
     const [mode, setMode] = React.useState(existing?.kind ?? 'emoji')
     const [emoji, setEmoji] = React.useState(existing?.kind === 'emoji' ? existing.value : '')
+    const [emojiQuery, setEmojiQuery] = React.useState('')
     const [text, setText] = React.useState(existing?.kind === 'text' ? existing.value : '')
     const [color, setColor] = React.useState(existing?.kind === 'text' ? existing.color : COLOR_PRESETS[0])
     const [image, setImage] = React.useState(existing?.kind === 'image' ? existing.value : '')
@@ -91,6 +92,11 @@ export function createIconDialog(React, primitives) {
         if (step !== readStep.current) return
         setImageError(t(IMAGE_ERRORS[failure?.reason] ?? 'error.unsupportedImage'))
       }
+    }
+
+    const updateEmojiQuery = (value) => {
+      setEmojiQuery(value)
+      if (normalizeIconSpec({ kind: 'emoji', value }) !== null) setEmoji(value.trim())
     }
 
     const updateQuery = (value) => {
@@ -220,7 +226,7 @@ export function createIconDialog(React, primitives) {
         }, t('tabs.text'))),
       h('div', { className: 'dsh-project-icon-pane' },
         mode === 'emoji'
-          ? h(EmojiBody, { emoji, setEmoji, setMode, t, h })
+          ? h(EmojiBody, { emoji, query: emojiQuery, onQueryChange: updateEmojiQuery, onPick: setEmoji, t, h })
           : mode === 'iconfont'
             ? h(IconfontBody, { query, updateQuery, search, appliedId, runSearch, chooseResult, t, h })
             : mode === 'image'
@@ -233,30 +239,42 @@ export function createIconDialog(React, primitives) {
       message === null ? null : h('div', { className: 'dsh-project-icon-error', role: 'alert' }, message)))
   }
 
-  function EmojiBody({ emoji, setEmoji, setMode, t, h }) {
+  function EmojiBody({ emoji, query, onQueryChange, onPick, t, h }) {
+    const matches = searchEmoji(query)
+    const searching = query.trim() !== ''
+    const groups = searching ? [{ key: 'matches', characters: matches }] : groupEmoji(matches)
+    const renderGrid = (characters) => h('div', { className: 'dsh-project-icon-grid', role: 'group' }, characters.map((choice) => h('button', {
+      key: choice,
+      type: 'button',
+      className: 'dsh-project-icon-emoji',
+      'aria-label': choice,
+      'aria-pressed': emoji === choice,
+      onClick: () => onPick(choice),
+    }, choice)))
     return h('div', { className: 'dsh-project-icon-emoji-body' },
-      h('div', { className: 'dsh-project-icon-grid', role: 'group' }, EMOJI_CHOICES.map((choice) => h('button', {
-        key: choice,
-        type: 'button',
-        className: 'dsh-project-icon-emoji',
-        'aria-label': choice,
-        'aria-pressed': emoji === choice,
-        onClick: () => {
-          setMode('emoji')
-          setEmoji(choice)
-        },
-      }, choice))),
       h('input', {
+        type: 'search',
         className: 'dsh-project-icon-input',
-        value: emoji,
-        maxLength: 32,
+        value: query,
+        maxLength: MAX_EMOJI_CODE_UNITS,
         placeholder: t('emoji.placeholder'),
         'aria-label': t('emoji.placeholder'),
-        onChange: (event) => {
-          setMode('emoji')
-          setEmoji(event.target.value)
+        onChange: (event) => onQueryChange(event.target.value),
+        onKeyDown: (event) => {
+          if (event.key !== 'Enter' || matches.length !== 1) return
+          event.preventDefault()
+          onPick(matches[0])
         },
-      }))
+      }),
+      searching && matches.length > 0
+        ? h('div', { className: 'dsh-project-icon-hint' }, t('emoji.count', { n: matches.length }))
+        : null,
+      matches.length === 0
+        ? h('div', { className: 'dsh-project-icon-hint' }, t('emoji.empty'))
+        : h('div', { className: 'dsh-project-icon-emoji-scroll' },
+          groups.map((group) => h('div', { key: group.key, className: 'dsh-project-icon-emoji-group' },
+            h('div', { className: 'dsh-project-icon-hint' }, t(`emoji.group.${group.key}`)),
+            renderGrid(group.characters)))))
   }
 
   function IconfontBody({ query, updateQuery, search, appliedId, runSearch, chooseResult, t, h }) {

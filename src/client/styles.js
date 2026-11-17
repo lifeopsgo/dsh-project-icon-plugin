@@ -16,7 +16,9 @@ export const STYLES = `
 .dsh-project-icon-result[data-pending="true"]{opacity:.45;cursor:progress}
 .dsh-project-icon-result img{width:26px;height:26px;object-fit:contain;pointer-events:none}
 .dsh-project-icon-pane{display:flex;flex-direction:column;justify-content:flex-start;min-height:156px}
-.dsh-project-icon-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;max-height:168px;overflow:auto;padding:2px 4px 2px 2px}
+.dsh-project-icon-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;padding:2px 2px 2px 2px}
+.dsh-project-icon-emoji-scroll{display:flex;flex-direction:column;gap:6px;max-height:186px;overflow:auto;padding-inline-end:4px}
+.dsh-project-icon-emoji-group{display:flex;flex-direction:column;gap:2px}
 .dsh-project-icon-emoji{display:flex;align-items:center;justify-content:center;height:34px;padding:0;border:1px solid transparent;border-radius:8px;background:none;font-size:18px;line-height:1;cursor:pointer;transition:background .12s ease,border-color .12s ease}
 .dsh-project-icon-emoji:hover{background:var(--dsw-alias-interactive-bg-hover,var(--dsw-alias-bg-layer-2))}
 .dsh-project-icon-emoji[aria-pressed="true"]{border-color:var(--dsw-alias-brand-primary);background:var(--dsw-alias-bg-layer-2)}
