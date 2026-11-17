@@ -51,9 +51,7 @@ export function createIconDialog(React, primitives) {
       onSave(draft)
     }
 
-    const pickFile = async (event) => {
-      const file = event.target.files?.[0]
-      event.target.value = ''
+    const applyFile = async (file) => {
       if (file === undefined) return
       setImageError(null)
       try {
@@ -62,6 +60,12 @@ export function createIconDialog(React, primitives) {
       } catch (failure) {
         setImageError(t(IMAGE_ERRORS[failure?.reason] ?? 'error.unsupportedImage'))
       }
+    }
+
+    const pickFile = (event) => {
+      const file = event.target.files?.[0]
+      event.target.value = ''
+      void applyFile(file)
     }
 
     const footer = h('div', { className: 'dsh-project-icon-footer' },
@@ -76,7 +80,7 @@ export function createIconDialog(React, primitives) {
       h('span', { className: 'dsh-project-icon-spacer' }),
       existing === undefined
         ? null
-        : h(Button, { variant: 'outline', disabled: saving, onClick: () => onSave(null) }, t('actions.reset')),
+        : h(Button, { variant: 'ghost', disabled: saving, onClick: () => onSave(null) }, t('actions.reset')),
       h(Button, { variant: 'outline', disabled: saving, onClick: onClose }, t('actions.cancel')),
       h(Button, { variant: 'primary', disabled: draft === null || saving, onClick: submit },
         saving ? t('actions.saving') : t('actions.save')))
@@ -87,6 +91,8 @@ export function createIconDialog(React, primitives) {
       title: t('dialog.title'),
       closeLabel: t('actions.cancel'),
       footer,
+      className: 'dsh-project-icon-modal',
+      contentClassName: 'dsh-project-icon-content',
     },
     h('div', { className: 'dsh-project-icon-body' },
       h('div', { className: 'dsh-project-icon-tabs', role: 'tablist' },
@@ -111,14 +117,16 @@ export function createIconDialog(React, primitives) {
           'aria-selected': mode === 'text',
           onClick: () => setMode('text'),
         }, t('tabs.text'))),
-      mode === 'emoji'
-        ? h(EmojiBody, { emoji, setEmoji, setMode, t, h })
-        : mode === 'image'
-          ? h(ImageBody, { image, fileInput, pickFile, t, h })
-          : h(TextBody, { text, color, setText, setColor, setMode, t, h }),
+      h('div', { className: 'dsh-project-icon-pane' },
+        mode === 'emoji'
+          ? h(EmojiBody, { emoji, setEmoji, setMode, t, h })
+          : mode === 'image'
+            ? h(ImageBody, { image, fileInput, pickFile, applyFile, t, h })
+            : h(TextBody, { text, color, setText, setColor, setMode, t, h })),
       h('div', { className: 'dsh-project-icon-preview' },
         h('span', { className: 'dsh-project-icon-preview-cell' }, draft === null ? null : preview(draft, h)),
-        h('span', null, draft === null ? t('preview.empty') : t('preview.label'))),
+        h('span', { className: 'dsh-project-icon-preview-label' },
+          draft === null ? t('preview.empty') : t('preview.label'))),
       message === null ? null : h('div', { className: 'dsh-project-icon-error', role: 'alert' }, message)))
   }
 
@@ -148,18 +156,28 @@ export function createIconDialog(React, primitives) {
       }))
   }
 
-  function ImageBody({ image, fileInput, pickFile, t, h }) {
+  function ImageBody({ image, fileInput, pickFile, applyFile, t, h }) {
     return h('div', { className: 'dsh-project-icon-image-body' },
-      h('div', { className: 'dsh-project-icon-image-actions' },
-        h(Button, { variant: 'outline', onClick: () => fileInput.current?.click() },
-          image === '' ? t('upload.pick') : t('upload.replace')),
-        h('input', {
-          ref: fileInput,
-          type: 'file',
-          accept: 'image/png,image/jpeg,image/webp',
-          hidden: true,
-          onChange: pickFile,
-        })),
+      h('button', {
+        type: 'button',
+        className: 'dsh-project-icon-dropzone',
+        onClick: () => fileInput.current?.click(),
+        onDragOver: (event) => event.preventDefault(),
+        onDrop: (event) => {
+          event.preventDefault()
+          void applyFile(event.dataTransfer?.files?.[0])
+        },
+      },
+      image === ''
+        ? h('span', { className: 'dsh-project-icon-dropzone-text' }, t('upload.pick'))
+        : h('img', { className: 'dsh-project-icon-dropzone-image', src: image, alt: '', role: 'presentation' })),
+      h('input', {
+        ref: fileInput,
+        type: 'file',
+        accept: 'image/png,image/jpeg,image/webp',
+        hidden: true,
+        onChange: pickFile,
+      }),
       h('div', { className: 'dsh-project-icon-hint' }, t('upload.hint')))
   }
 
@@ -187,6 +205,7 @@ export function createIconDialog(React, primitives) {
             setColor(event.target.value)
           },
         })),
+      h('div', { className: 'dsh-project-icon-sample', style: { color } }, text === '' ? 'AB' : text),
       h('div', { className: 'dsh-project-icon-swatches' }, COLOR_PRESETS.map((preset) => h('button', {
         key: preset,
         type: 'button',

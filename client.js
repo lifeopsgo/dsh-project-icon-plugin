@@ -466,9 +466,7 @@
         if (draft === null || saving) return;
         onSave(draft);
       };
-      const pickFile = async (event) => {
-        const file = event.target.files?.[0];
-        event.target.value = "";
+      const applyFile = async (file) => {
         if (file === void 0) return;
         setImageError(null);
         try {
@@ -477,6 +475,11 @@
         } catch (failure) {
           setImageError(t(IMAGE_ERRORS[failure?.reason] ?? "error.unsupportedImage"));
         }
+      };
+      const pickFile = (event) => {
+        const file = event.target.files?.[0];
+        event.target.value = "";
+        void applyFile(file);
       };
       const footer = h(
         "div",
@@ -493,7 +496,7 @@
           h("span", null, t("toggle.replace"))
         ),
         h("span", { className: "dsh-project-icon-spacer" }),
-        existing === void 0 ? null : h(Button, { variant: "outline", disabled: saving, onClick: () => onSave(null) }, t("actions.reset")),
+        existing === void 0 ? null : h(Button, { variant: "ghost", disabled: saving, onClick: () => onSave(null) }, t("actions.reset")),
         h(Button, { variant: "outline", disabled: saving, onClick: onClose }, t("actions.cancel")),
         h(
           Button,
@@ -508,7 +511,9 @@
           onClose,
           title: t("dialog.title"),
           closeLabel: t("actions.cancel"),
-          footer
+          footer,
+          className: "dsh-project-icon-modal",
+          contentClassName: "dsh-project-icon-content"
         },
         h(
           "div",
@@ -538,12 +543,20 @@
               onClick: () => setMode("text")
             }, t("tabs.text"))
           ),
-          mode === "emoji" ? h(EmojiBody, { emoji, setEmoji, setMode, t, h }) : mode === "image" ? h(ImageBody, { image, fileInput, pickFile, t, h }) : h(TextBody, { text, color, setText, setColor, setMode, t, h }),
+          h(
+            "div",
+            { className: "dsh-project-icon-pane" },
+            mode === "emoji" ? h(EmojiBody, { emoji, setEmoji, setMode, t, h }) : mode === "image" ? h(ImageBody, { image, fileInput, pickFile, applyFile, t, h }) : h(TextBody, { text, color, setText, setColor, setMode, t, h })
+          ),
           h(
             "div",
             { className: "dsh-project-icon-preview" },
             h("span", { className: "dsh-project-icon-preview-cell" }, draft === null ? null : preview(draft, h)),
-            h("span", null, draft === null ? t("preview.empty") : t("preview.label"))
+            h(
+              "span",
+              { className: "dsh-project-icon-preview-label" },
+              draft === null ? t("preview.empty") : t("preview.label")
+            )
           ),
           message === null ? null : h("div", { className: "dsh-project-icon-error", role: "alert" }, message)
         )
@@ -577,26 +590,31 @@
         })
       );
     }
-    function ImageBody({ image, fileInput, pickFile, t, h: h2 }) {
+    function ImageBody({ image, fileInput, pickFile, applyFile, t, h: h2 }) {
       return h2(
         "div",
         { className: "dsh-project-icon-image-body" },
         h2(
-          "div",
-          { className: "dsh-project-icon-image-actions" },
-          h2(
-            Button,
-            { variant: "outline", onClick: () => fileInput.current?.click() },
-            image === "" ? t("upload.pick") : t("upload.replace")
-          ),
-          h2("input", {
-            ref: fileInput,
-            type: "file",
-            accept: "image/png,image/jpeg,image/webp",
-            hidden: true,
-            onChange: pickFile
-          })
+          "button",
+          {
+            type: "button",
+            className: "dsh-project-icon-dropzone",
+            onClick: () => fileInput.current?.click(),
+            onDragOver: (event) => event.preventDefault(),
+            onDrop: (event) => {
+              event.preventDefault();
+              void applyFile(event.dataTransfer?.files?.[0]);
+            }
+          },
+          image === "" ? h2("span", { className: "dsh-project-icon-dropzone-text" }, t("upload.pick")) : h2("img", { className: "dsh-project-icon-dropzone-image", src: image, alt: "", role: "presentation" })
         ),
+        h2("input", {
+          ref: fileInput,
+          type: "file",
+          accept: "image/png,image/jpeg,image/webp",
+          hidden: true,
+          onChange: pickFile
+        }),
         h2("div", { className: "dsh-project-icon-hint" }, t("upload.hint"))
       );
     }
@@ -629,6 +647,7 @@
             }
           })
         ),
+        h2("div", { className: "dsh-project-icon-sample", style: { color } }, text === "" ? "AB" : text),
         h2("div", { className: "dsh-project-icon-swatches" }, COLOR_PRESETS.map((preset) => h2("button", {
           key: preset,
           type: "button",
@@ -656,33 +675,44 @@
 
   // src/client/styles.js
   var STYLES = `
-.dsh-project-icon-body{display:flex;flex-direction:column;gap:12px;min-width:360px}
-.dsh-project-icon-tabs{display:inline-flex;gap:4px;padding:3px;border-radius:8px;background:var(--dsw-alias-bg-layer-2)}
-.dsh-project-icon-tab{flex:1;padding:5px 10px;border:0;border-radius:6px;background:none;color:var(--dsw-alias-label-secondary);font:inherit;font-size:13px;line-height:18px;cursor:pointer}
-.dsh-project-icon-tab[aria-selected="true"]{background:var(--dsw-alias-bg-overlay,var(--dsw-alias-bg-layer-1));color:var(--dsw-alias-label-primary);font-weight:600}
-.dsh-project-icon-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;max-height:168px;overflow:auto;padding:2px}
-.dsh-project-icon-emoji{display:flex;align-items:center;justify-content:center;height:30px;border:1px solid transparent;border-radius:6px;background:none;font-size:17px;line-height:1;cursor:pointer}
+.dsh-project-icon-modal{width:min(520px,calc(100vw - 48px));max-width:none}
+.dsh-project-icon-body{display:flex;flex-direction:column;gap:16px;width:100%}
+.dsh-project-icon-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:3px;border:1px solid var(--dsw-alias-border-l1);border-radius:10px;background:var(--dsw-alias-bg-layer-2)}
+.dsh-project-icon-tab{height:30px;border:0;border-radius:7px;background:none;color:var(--dsw-alias-label-secondary);font:inherit;font-size:13px;line-height:18px;cursor:pointer;transition:background .15s ease,color .15s ease}
+.dsh-project-icon-tab:hover{color:var(--dsw-alias-label-primary)}
+.dsh-project-icon-tab[aria-selected="true"]{background:var(--dsw-alias-bg-base);color:var(--dsw-alias-label-primary);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.dsh-project-icon-emoji-body,.dsh-project-icon-text-body{display:flex;flex-direction:column;gap:10px}
+.dsh-project-icon-image-body{display:flex;flex-direction:column;gap:8px}
+.dsh-project-icon-pane{display:flex;flex-direction:column;justify-content:flex-start;min-height:156px}
+.dsh-project-icon-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;max-height:168px;overflow:auto;padding:2px 4px 2px 2px}
+.dsh-project-icon-emoji{display:flex;align-items:center;justify-content:center;height:34px;padding:0;border:1px solid transparent;border-radius:8px;background:none;font-size:18px;line-height:1;cursor:pointer;transition:background .12s ease,border-color .12s ease}
 .dsh-project-icon-emoji:hover{background:var(--dsw-alias-interactive-bg-hover,var(--dsw-alias-bg-layer-2))}
 .dsh-project-icon-emoji[aria-pressed="true"]{border-color:var(--dsw-alias-brand-primary);background:var(--dsw-alias-bg-layer-2)}
-.dsh-project-icon-emoji-body,.dsh-project-icon-text-body{display:flex;flex-direction:column;gap:8px}
-.dsh-project-icon-image-body{display:flex;flex-direction:column;gap:8px}
-.dsh-project-icon-image-actions{display:flex;align-items:center;gap:10px}
-.dsh-project-icon-input{box-sizing:border-box;width:100%;height:32px;padding:0 10px;border:1px solid var(--dsw-alias-border-l1);border-radius:6px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);font:inherit;font-size:14px}
-.dsh-project-icon-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}
 .dsh-project-icon-field{display:flex;align-items:center;gap:8px}
-.dsh-project-icon-swatches{display:flex;flex-wrap:wrap;gap:6px}
-.dsh-project-icon-swatch{width:20px;height:20px;padding:0;border:1px solid var(--dsw-alias-border-l1);border-radius:50%;cursor:pointer}
-.dsh-project-icon-swatch[aria-pressed="true"]{box-shadow:0 0 0 2px var(--dsw-alias-brand-primary)}
-.dsh-project-icon-color{width:32px;height:32px;padding:0;border:1px solid var(--dsw-alias-border-l1);border-radius:6px;background:none;flex:none}
-.dsh-project-icon-preview{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px dashed var(--dsw-alias-border-l1);border-radius:8px;color:var(--dsw-alias-label-secondary);font-size:12px}
+.dsh-project-icon-input{box-sizing:border-box;flex:1;min-width:0;height:34px;padding:0 12px;border:1px solid var(--dsw-alias-border-l1);border-radius:8px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-primary);font:inherit;font-size:14px;line-height:32px;transition:border-color .15s ease}
+.dsh-project-icon-input::placeholder{color:var(--dsw-alias-label-secondary)}
+.dsh-project-icon-input:focus{outline:none;border-color:var(--dsw-alias-brand-primary)}
+.dsh-project-icon-swatches{display:flex;flex-wrap:wrap;gap:8px}
+.dsh-project-icon-swatch{width:22px;height:22px;padding:0;border:1px solid var(--dsw-alias-border-l1);border-radius:50%;cursor:pointer;transition:transform .12s ease}
+.dsh-project-icon-swatch:hover{transform:scale(1.1)}
+.dsh-project-icon-swatch[aria-pressed="true"]{box-shadow:0 0 0 2px var(--dsw-alias-bg-base),0 0 0 4px var(--dsw-alias-brand-primary)}
+.dsh-project-icon-color{flex:none;width:34px;height:34px;padding:2px;border:1px solid var(--dsw-alias-border-l1);border-radius:8px;background:var(--dsw-alias-bg-layer-1);cursor:pointer}
+.dsh-project-icon-dropzone{display:flex;align-items:center;justify-content:center;width:100%;height:112px;padding:8px;border:1px dashed var(--dsw-alias-border-l2);border-radius:10px;background:var(--dsw-alias-bg-layer-1);color:var(--dsw-alias-label-secondary);font:inherit;font-size:13px;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+.dsh-project-icon-dropzone:hover{border-color:var(--dsw-alias-brand-primary);background:var(--dsw-alias-bg-layer-2)}
+.dsh-project-icon-dropzone-image{max-width:72px;max-height:72px;object-fit:contain}
+.dsh-project-icon-dropzone-text{pointer-events:none}
+.dsh-project-icon-sample{display:flex;align-items:center;justify-content:center;height:76px;border:1px solid var(--dsw-alias-border-l1);border-radius:10px;background:var(--dsw-alias-bg-layer-1);font-size:34px;font-weight:600;line-height:1}
+.dsh-project-icon-hint{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
+.dsh-project-icon-preview{display:flex;align-items:center;gap:12px;min-height:52px;padding:0 14px;border:1px solid var(--dsw-alias-border-l1);border-radius:10px;background:var(--dsw-alias-bg-layer-1)}
 .dsh-project-icon-preview-cell{display:inline-flex;flex:none;align-items:center;justify-content:center;width:16px;height:20px}
 .dsh-project-icon-preview-glyph{font-size:14px;line-height:1}
 .dsh-project-icon-preview-image{width:16px;height:16px;object-fit:contain}
-.dsh-project-icon-hint{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
-.dsh-project-icon-footer{display:flex;align-items:center;gap:8px;width:100%}
-.dsh-project-icon-toggle{display:inline-flex;align-items:center;gap:8px;color:var(--dsw-alias-label-secondary);font-size:13px;white-space:nowrap;cursor:pointer}
-.dsh-project-icon-spacer{flex:1}
+.dsh-project-icon-preview-label{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
 .dsh-project-icon-error{color:var(--dsw-alias-state-error-primary);font-size:12px;line-height:18px}
+.dsh-project-icon-footer{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;width:100%}
+.dsh-project-icon-footer button{flex:none;white-space:nowrap}
+.dsh-project-icon-toggle{display:inline-flex;align-items:center;gap:8px;margin-inline-end:4px;color:var(--dsw-alias-label-secondary);font-size:13px;line-height:18px;white-space:nowrap;cursor:pointer}
+.dsh-project-icon-spacer{flex:1}
 `;
 
   // src/client/overlay.js
